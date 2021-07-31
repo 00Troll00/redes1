@@ -2,7 +2,7 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 31/07/2021 15:18
- * Last update: 30/07/2021 
+ * Last update: 31/07/2021 19:41
  * Name: MainContrellor.java
  * Function: 
  *******************************************************************/
@@ -30,5 +30,18 @@ public class Convert {
       exponent--;
     }
     return temp;
+  }
+
+  public static int manchesterToDecimal(String manchester){
+    char[] arrayChar = manchester.toCharArray();
+    int number = 0;
+    int cont = 0;
+    
+    for(int i=arrayChar.length-1; i>=0; i-=2){
+      if(arrayChar[i] == '0')
+        number += pow(2, cont);
+      cont++;
+    }
+    return number;
   }
 }

@@ -1,6 +1,5 @@
 package receiver;
 
-import controllers.MainController;
 import javafx.scene.control.TextArea;
 
 public class ReceiverApplication {

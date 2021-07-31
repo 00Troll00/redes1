@@ -39,11 +39,21 @@ public class ReceiverPhisicalLayer {
     return asciiMessage;
   }
 
-  private static int[] differentialManchester(Object bitsMessage) {
-    return null;
+  private static int[] manchester(int[] manchester) {
+    int[] asciiMessage = new int[manchester.length/2];
+    String temp;
+    //converts from manchester to ascii using the function manchesterToDecimal
+    for(int i=0; i<asciiMessage.length; i++){
+      temp = String.valueOf(manchester[i*2 +1]);
+      if(temp.length() % 2 == 0)
+        asciiMessage[i] = Convert.manchesterToDecimal(String.valueOf(manchester[i*2]) + temp);
+      else
+        asciiMessage[i] = Convert.manchesterToDecimal(String.valueOf(manchester[i*2]) + temp.substring(1));
+    }
+    return asciiMessage;
   }
 
-  private static int[] manchester(Object bitsMessage) {
+  private static int[] differentialManchester(Object bitsMessage) {
     return null;
   }
 }

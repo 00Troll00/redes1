@@ -27,6 +27,6 @@ public class TransmitterApplication {
       asciiMessage[i] = message[i];
     
     //sends the message to the phisical layer
-    TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, 0, controller);
+    TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, 1, controller);
   }
 }
