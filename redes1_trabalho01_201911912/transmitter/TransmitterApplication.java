@@ -10,15 +10,12 @@ package transmitter;
 
 import controllers.MainController;
 import javafx.scene.control.TextArea;
-import receiver.ReceiverApplication;
 
 public class TransmitterApplication {
   private TextArea textArea;
-  private ReceiverApplication receiver;
 
-  public TransmitterApplication(TextArea textArea, ReceiverApplication receiver){
+  public TransmitterApplication(TextArea textArea){
     this.textArea = textArea;
-    this.receiver = receiver;
   }
 
   //sends the mensage to the phisical layer

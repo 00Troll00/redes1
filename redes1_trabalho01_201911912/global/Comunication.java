@@ -38,6 +38,7 @@ public class Comunication {
     for(int i = 0; i<transmitterBits.length; i++){
       receiverBits[i] = transmitterBits[i];
       temp = receiverBits[i];
+      
       //changes that are made to the interface
       while(temp != 0){
         if(temp % 10 == 1)

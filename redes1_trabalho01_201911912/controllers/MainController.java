@@ -33,7 +33,7 @@ public class MainController implements Initializable{
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     receiver = new ReceiverApplication(receiverTextArea);
-    transmitter = new TransmitterApplication(transmitterTextArea, receiver);
+    transmitter = new TransmitterApplication(transmitterTextArea);
     //button configuration
     sendButton.setOnAction( event -> transmitter.sendToPhisicalLayer(this));
     scroll.setMax(canvas.getWidth() - scroll.getWidth());
