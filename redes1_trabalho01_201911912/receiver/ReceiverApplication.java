@@ -1,12 +1,12 @@
 package receiver;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 public class ReceiverApplication {
-  private TextField textField;
+  private TextArea textArea;
 
-  public ReceiverApplication(TextField textField) {
-    this.textField = textField;
+  public ReceiverApplication(TextArea textArea) {
+    this.textArea = textArea;
   }
 
   public void receiver(int[] asciiMessage){
@@ -18,7 +18,6 @@ public class ReceiverApplication {
       temp = (char) asciiMessage[i];
       message += temp; 
     }
-
-    textField.setText(message);
+    textArea.setText(message);
   }
 }

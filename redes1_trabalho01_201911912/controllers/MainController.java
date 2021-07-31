@@ -14,13 +14,13 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import receiver.ReceiverApplication;
 import transmitter.TransmitterApplication;
 
 public class MainController implements Initializable{
-  @FXML private TextField transmitterTextField;
-  @FXML private TextField receiverTextField;
+  @FXML private TextArea transmitterTextArea;
+  @FXML private TextArea receiverTextArea;
   @FXML private Button sendButton;
 
   private TransmitterApplication transmitter;
@@ -28,8 +28,8 @@ public class MainController implements Initializable{
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    receiver = new ReceiverApplication(receiverTextField);
-    transmitter = new TransmitterApplication(transmitterTextField, receiver);
+    receiver = new ReceiverApplication(receiverTextArea);
+    transmitter = new TransmitterApplication(transmitterTextArea, receiver);
     //button configuration
     sendButton.setOnAction( event -> transmitter.sendToPhisicalLayer());
   }
