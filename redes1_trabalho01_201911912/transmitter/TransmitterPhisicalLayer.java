@@ -8,14 +8,13 @@
  *******************************************************************/
 package transmitter;
 
+import controllers.MainController;
 import global.Comunication;
-import receiver.ReceiverApplication;
 
 public class TransmitterPhisicalLayer {
   
   //receives the message from the application layer
-  public static void receiveFromApplicationLayer(int[] asciiMessage, int codificationType, ReceiverApplication receiver){
-    System.out.println("2");
+  public static void receiveFromApplicationLayer(int[] asciiMessage, int codificationType, MainController controller){
     int fluxOfBits [] = null;
 
     switch(codificationType){
@@ -34,7 +33,7 @@ public class TransmitterPhisicalLayer {
     }
 
     //calls the methood comunicate in the Comunication class
-    Comunication.comunicate(fluxOfBits, codificationType, receiver);
+    Comunication.comunicate(fluxOfBits, codificationType, controller);
   }
 
   public static int[] binary(int[] asciiMessage){

@@ -1,5 +1,6 @@
 package receiver;
 
+import controllers.MainController;
 import javafx.scene.control.TextArea;
 
 public class ReceiverApplication {
@@ -10,7 +11,6 @@ public class ReceiverApplication {
   }
 
   public void receiver(int[] asciiMessage){
-    System.out.println("5");
     String message = "";
     char temp;
     //transforms from ascii array to String

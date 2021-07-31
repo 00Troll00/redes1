@@ -12,7 +12,6 @@ import util.Convert;
 
 public class ReceiverPhisicalLayer {
   public static void receives(int[] bitsMessage, int codificationType, ReceiverApplication receiver){
-    System.out.println("4");
     int asciiMessage [] = null;
 
     switch(codificationType){

@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox layoutX="193.0" layoutY="66.0" prefHeight="200.0" prefWidth="824.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
+      <VBox prefHeight="600.0" prefWidth="1024.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextArea fx:id="transmitterTextArea" prefHeight="200.0" prefWidth="250.0" wrapText="true" />
-            <Region prefHeight="1.0" prefWidth="1.0" HBox.hgrow="ALWAYS" />
-            <TextArea fx:id="receiverTextArea" prefHeight="200.0" prefWidth="250.0" wrapText="true" />
+            <HBox prefHeight="200.0" prefWidth="824.0">
+               <children>
+                  <TextArea fx:id="transmitterTextArea" prefHeight="200.0" prefWidth="250.0" wrapText="true" />
+                  <Region prefHeight="1.0" prefWidth="1.0" HBox.hgrow="ALWAYS" />
+                  <TextArea fx:id="receiverTextArea" prefHeight="200.0" prefWidth="250.0" wrapText="true" />
+               </children>
+            </HBox>
+            <Button fx:id="sendButton" mnemonicParsing="false" text="SEND" />
+            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Button" />
+            <Region prefHeight="2.0" prefWidth="2.0" VBox.vgrow="ALWAYS" />
          </children>
-      </HBox>
-      <Button fx:id="sendButton" layoutX="156.0" layoutY="322.0" mnemonicParsing="false" text="SEND" />
+         <padding>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+         </padding>
+      </VBox>
+      <Canvas fx:id="canvas" height="40.0" layoutY="531.0" width="5000.0" AnchorPane.bottomAnchor="29.0" />
+      <ScrollBar fx:id="scroll" layoutY="571.0" AnchorPane.bottomAnchor="14.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

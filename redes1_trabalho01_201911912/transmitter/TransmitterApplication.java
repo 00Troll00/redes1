@@ -8,6 +8,7 @@
  *******************************************************************/
 package transmitter;
 
+import controllers.MainController;
 import javafx.scene.control.TextArea;
 import receiver.ReceiverApplication;
 
@@ -21,8 +22,7 @@ public class TransmitterApplication {
   }
 
   //sends the mensage to the phisical layer
-  public void sendToPhisicalLayer(){
-    System.out.println("1");
+  public void sendToPhisicalLayer(MainController controller){
     char[] message = textArea.getText().toCharArray();
     int[] asciiMessage = new int[message.length];
     //transforms from char in int, with the ascii code
@@ -30,6 +30,6 @@ public class TransmitterApplication {
       asciiMessage[i] = message[i];
     
     //sends the message to the phisical layer
-    TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, 0, receiver);
+    TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, 0, controller);
   }
 }

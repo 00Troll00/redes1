@@ -13,7 +13,9 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import receiver.ReceiverApplication;
 import transmitter.TransmitterApplication;
@@ -22,6 +24,8 @@ public class MainController implements Initializable{
   @FXML private TextArea transmitterTextArea;
   @FXML private TextArea receiverTextArea;
   @FXML private Button sendButton;
+  @FXML private Canvas canvas;
+  @FXML private ScrollBar scroll;
 
   private TransmitterApplication transmitter;
   private ReceiverApplication receiver;
@@ -31,7 +35,23 @@ public class MainController implements Initializable{
     receiver = new ReceiverApplication(receiverTextArea);
     transmitter = new TransmitterApplication(transmitterTextArea, receiver);
     //button configuration
-    sendButton.setOnAction( event -> transmitter.sendToPhisicalLayer());
+    sendButton.setOnAction( event -> transmitter.sendToPhisicalLayer(this));
+    scroll.setMax(canvas.getWidth() - scroll.getWidth());
+
+    scroll.valueProperty().addListener( (v, oldValue, newValue) -> {
+      canvas.setLayoutX(newValue.intValue()* (-1));
+    });
   }
-  
+
+  public Canvas getCanvas() {
+    return canvas;
+  }
+
+  public ScrollBar getScroll() {
+    return scroll;
+  }
+
+  public ReceiverApplication getReceiver() {
+    return receiver;
+  }
 }
