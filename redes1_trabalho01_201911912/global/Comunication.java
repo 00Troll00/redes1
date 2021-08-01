@@ -16,6 +16,16 @@ import javafx.scene.paint.Color;
 import receiver.ReceiverPhisicalLayer;
 
 public class Comunication { 
+  public static void comunicate(int[] transmitterBits, int codificationType, MainController controller){
+    int[] receiverBits = new int[transmitterBits.length];
+
+    for(int i=0; i<transmitterBits.length; i++){
+      receiverBits[i] = transmitterBits[i];
+    }
+    ReceiverPhisicalLayer.receives(receiverBits, codificationType, controller.getReceiver());
+  }
+
+  /*
   private static int canvasXPosition;
   
   public static void comunicate(int[] transmitterBits, int codificationType, MainController controller){
@@ -49,6 +59,16 @@ public class Comunication {
         temp /= 10;
       }
     }
-    ReceiverPhisicalLayer.receives(receiverBits, codificationType, controller.getReceiver());
+    ReceiverPhisicalLayer.receives(receiverBits, null, codificationType, controller.getReceiver());
   }
+
+  public static void comunicate(String[] transmitterBits, int codificationType, MainController controller) {
+    String[] receiverBits = new String[transmitterBits.length];
+    for(int i = 0; i<transmitterBits.length; i++){
+      receiverBits[i] = transmitterBits[i];
+    }
+
+    ReceiverPhisicalLayer.receives(null, receiverBits, codificationType, controller.getReceiver());
+  }
+  */
 }
