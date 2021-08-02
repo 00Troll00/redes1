@@ -25,7 +25,7 @@ public class ReceiverPhisicalLayer {
         break;
       //Differential Manchester decodification
       case 2:
-        //asciiMessage = differentialManchester(bitsMessage);
+        asciiMessage = differentialManchester(bitsMessage);
         break;
     }
     receiver.receiver(asciiMessage);
@@ -34,10 +34,12 @@ public class ReceiverPhisicalLayer {
   private static int[] binary(int[] bitsMessage) {
     int[] asciiMessage = new int[bitsMessage.length/8];
     int position = 0; //the position of the bit in the array
+    int stopValue; //the value that the positios must reach to stop the while
     String binaryString;
     for(int i=0; i<asciiMessage.length; i++){
       binaryString = "";
-      while(position != (8*(i+1))){
+      stopValue = 8*(i+1);
+      while(position != stopValue){
         binaryString += bitsMessage[position];
         position++;      
       }
@@ -49,10 +51,12 @@ public class ReceiverPhisicalLayer {
   private static int[] manchester(int[] bitsMessage) {
     int[] asciiMessage = new int[bitsMessage.length/16];
     int position = 0; //the position of the bit in the array
+    int stopValue; //the value that the positios must reach to stop the while
     String manchesterString;
     for(int i=0; i<asciiMessage.length; i++){
       manchesterString = "";
-      while(position != (16*(i+1))){
+      stopValue = 16*(i+1);
+      while(position != stopValue){
         manchesterString += bitsMessage[position];
         position++;      
       }
@@ -62,7 +66,32 @@ public class ReceiverPhisicalLayer {
   }//end manchester
 
   private static int[] differentialManchester(int[] bitsMessage){
-    return null;
+    int[] asciiMessage = new int[bitsMessage.length/16];
+    int position = 0; //the position of the bit in the array
+    int stopValue; //the value that the positios must reach to stop the while
+    String binary;
+
+    for(int i=0; i<asciiMessage.length; i++){
+      binary = "";
+      //jumps the 0's in the begin of the code, since some bytes have 0's in the begin
+      while(bitsMessage[position] == bitsMessage[position+1])
+        position+=2;
+
+      binary += "1"; //the sequence will always starts with 1
+      position += 2; //jumps the first 2 bits of the code
+
+      stopValue = 16*(i+1);
+      while(position != stopValue){
+        //this means that don't occur a transition
+        if(bitsMessage[position] == bitsMessage[position-2])
+          binary += "0";
+        else
+          binary += "1";
+        position += 2;
+      }
+      asciiMessage[i] = Convert.binaryToDecimal(Integer.parseInt(binary));
+    }
+    return asciiMessage;
   }
 
   /*

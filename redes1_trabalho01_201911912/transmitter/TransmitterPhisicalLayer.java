@@ -25,7 +25,7 @@ public class TransmitterPhisicalLayer {
         break;
       //Differential Manchester codification
       case 2:
-        //fluxOfBits = differentialManchester(binary(asciiMessage));
+        fluxOfBits = differentialManchester(asciiMessage);
         break;
     }
     Comunication.comunicate(fluxOfBits, codificationType, controller);
@@ -71,7 +71,31 @@ public class TransmitterPhisicalLayer {
     return bits;
   }
   
-  
+  public static int[] differentialManchester(int[] asciiMessage){
+    int[] differentialManchester = new int[asciiMessage.length*16];
+    String binary;
+    int position = 0;
+    for(int i=0; i<asciiMessage.length; i++){
+      binary = Integer.toBinaryString(asciiMessage[i]);
+      position = (16 * (i + 1)) - binary.length()*2;
+      differentialManchester[position    ] = 1;
+      differentialManchester[position + 1] = 0;
+      position += 2;
+      
+      for(int j=1; j<binary.length(); j++){
+        if(binary.charAt(j) == '0'){
+          differentialManchester[position    ] = differentialManchester [position - 2];
+          differentialManchester[position + 1] = differentialManchester [position - 1];
+        }
+        else{
+          differentialManchester[position    ] = differentialManchester [position - 1];
+          differentialManchester[position + 1] = differentialManchester [position - 2];
+        }
+        position += 2;
+      }//end for
+    } 
+    return differentialManchester;
+  }
   /*
   //receives the message from the application layer
   public static void receiveFromApplicationLayer(int[] asciiMessage, int codificationType, MainController controller){
