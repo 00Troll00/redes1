@@ -23,7 +23,7 @@
                </children>
             </HBox>
             <Button fx:id="sendButton" mnemonicParsing="false" text="SEND" />
-            <ComboBox prefWidth="150.0" />
+            <ComboBox fx:id="codificationComboBox" prefWidth="150.0" />
             <Region prefHeight="2.0" prefWidth="2.0" VBox.vgrow="ALWAYS" />
          </children>
          <padding>

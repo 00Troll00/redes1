@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import receiver.ReceiverApplication;
@@ -26,6 +27,7 @@ public class MainController implements Initializable{
   @FXML private Button sendButton;
   @FXML private Canvas canvas;
   @FXML private ScrollBar scroll;
+  @FXML private ComboBox<String> codificationComboBox;
 
   private TransmitterApplication transmitter;
   private ReceiverApplication receiver;
