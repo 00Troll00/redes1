@@ -29,21 +29,33 @@ public class MainController implements Initializable{
   @FXML private ScrollBar scroll;
   @FXML private ComboBox<String> codificationComboBox;
 
+  private int codificationType = 0;
   private TransmitterApplication transmitter;
   private ReceiverApplication receiver;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    //ComboBox settings
+    codificationComboBox.getItems().setAll("Binary", "Manchester", "Differential Manchester");
+    codificationComboBox.getSelectionModel().selectFirst();
+    codificationComboBox.selectionModelProperty().addListener((v, oldeValue, newValue) ->{
+      switch(newValue.getSelectedItem()){
+        case "Binary": codificationType = 0; break;
+        case "Manchester": codificationType = 1; break;
+        case "Differential Manchester": codificationType = 2; break;
+      }
+    });
+
     receiver = new ReceiverApplication(receiverTextArea);
     transmitter = new TransmitterApplication(transmitterTextArea);
     //button configuration
-    sendButton.setOnAction( event -> transmitter.sendToPhisicalLayer(this));
+    sendButton.setOnAction( event -> transmitter.sendToPhisicalLayer(this, codificationType));
     scroll.setMax(canvas.getWidth() - scroll.getWidth());
 
     scroll.valueProperty().addListener( (v, oldValue, newValue) -> {
       canvas.setLayoutX(newValue.intValue()* (-1));
     });
-  }
+  }//end initialize
 
   public Canvas getCanvas() {
     return canvas;

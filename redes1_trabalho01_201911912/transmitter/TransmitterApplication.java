@@ -19,7 +19,7 @@ public class TransmitterApplication {
   }
 
   //sends the mensage to the phisical layer
-  public void sendToPhisicalLayer(MainController controller){
+  public void sendToPhisicalLayer(MainController controller, int codificationType){
     char[] message = textArea.getText().toCharArray();
     int[] asciiMessage = new int[message.length];
     //transforms from char in int, with the ascii code
@@ -27,6 +27,6 @@ public class TransmitterApplication {
       asciiMessage[i] = message[i];
     
     //sends the message to the phisical layer
-    TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, 2, controller);
+    TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, codificationType, controller);
   }
 }
