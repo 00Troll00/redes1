@@ -34,20 +34,31 @@ public class ReceiverPhisicalLayer {
   private static int[] binary(int[] bitsMessage) {
     int[] asciiMessage = new int[bitsMessage.length/8];
     int position = 0; //the position of the bit in the array
-    String temp;
+    String binaryString;
     for(int i=0; i<asciiMessage.length; i++){
-      temp = "";
+      binaryString = "";
       while(position != (8*(i+1))){
-        temp += bitsMessage[position];
+        binaryString += bitsMessage[position];
         position++;      
       }
-      asciiMessage[i] = Convert.binaryToDecimal(Integer.parseInt(temp));
+      asciiMessage[i] = Convert.binaryToDecimal(Integer.parseInt(binaryString));
     }//end for
     return asciiMessage;
   }
 
   private static int[] manchester(int[] bitsMessage) {
-    return null;
+    int[] asciiMessage = new int[bitsMessage.length/16];
+    int position = 0; //the position of the bit in the array
+    String manchesterString;
+    for(int i=0; i<asciiMessage.length; i++){
+      manchesterString = "";
+      while(position != (16*(i+1))){
+        manchesterString += bitsMessage[position];
+        position++;      
+      }
+      asciiMessage[i] = Convert.manchesterToDecimal(manchesterString);
+    }//end for
+    return asciiMessage;
   }
 
   

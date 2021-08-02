@@ -33,11 +33,14 @@ public class Convert {
   }
 
   public static int manchesterToDecimal(String manchester){
+    //System.out.println(manchester);
     char[] arrayChar = manchester.toCharArray();
     int number = 0;
     int cont = 0;
     
     for(int i=arrayChar.length-1; i>=0; i-=2){
+      if(arrayChar[i] == arrayChar[i-1])
+        break;
       if(arrayChar[i] == '0')
         number += pow(2, cont);
       cont++;

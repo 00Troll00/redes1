@@ -37,21 +37,39 @@ public class TransmitterPhisicalLayer {
     int position;
     for(int i=0; i<asciiMessage.length; i++){
       temp = Integer.toBinaryString(asciiMessage[i]).toCharArray();
-      position = 8 * (1+i); //defines the and position, where a bit must be storage
+      position = 8 * (1+i); //defines the last position, where a bit must be storage
       position--;
       for(int j=temp.length-1; j>=0; j--){
         bits[position] = Character.getNumericValue(temp[j]);
         position--;
-      }
-    }
+      }//end for
+    }//end for
     return bits;
   }
 
   private static int[] manchester(int[] asciiMessage) {
-    return null;
+    int[] bits = new int[asciiMessage.length * 16];
+    String binary;
+    int position;
+    for(int i=0; i<asciiMessage.length; i++){
+      binary = Integer.toBinaryString(asciiMessage[i]);
+
+      position = 16 * (1+i); //defines the last position, where a bit must be storage
+      position--;
+      for(int j = binary.length()-1; j>=0; j--){
+        if(binary.charAt(j) == '1'){
+          bits[position] = 0;
+          bits[position-1] = 1;
+        }
+        else{
+          bits[position] = 1;
+          bits[position-1] = 0;
+        }
+        position -= 2;
+      }//end for
+    }//end for
+    return bits;
   }
-  
-  
   
   
   /*
