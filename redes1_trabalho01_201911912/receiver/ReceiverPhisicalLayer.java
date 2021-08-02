@@ -44,7 +44,7 @@ public class ReceiverPhisicalLayer {
       asciiMessage[i] = Convert.binaryToDecimal(Integer.parseInt(binaryString));
     }//end for
     return asciiMessage;
-  }
+  }//end binary
 
   private static int[] manchester(int[] bitsMessage) {
     int[] asciiMessage = new int[bitsMessage.length/16];
@@ -59,9 +59,11 @@ public class ReceiverPhisicalLayer {
       asciiMessage[i] = Convert.manchesterToDecimal(manchesterString);
     }//end for
     return asciiMessage;
-  }
+  }//end manchester
 
-  
+  private static int[] differentialManchester(int[] bitsMessage){
+    return null;
+  }
 
   /*
   public static void receives(int[] bitsMessage, String[] bitsMessageString, int codificationType, ReceiverApplication receiver){

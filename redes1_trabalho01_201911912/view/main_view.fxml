@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,9 +23,7 @@
                </children>
             </HBox>
             <Button fx:id="sendButton" mnemonicParsing="false" text="SEND" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+            <ComboBox prefWidth="150.0" />
             <Region prefHeight="2.0" prefWidth="2.0" VBox.vgrow="ALWAYS" />
          </children>
          <padding>
