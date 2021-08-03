@@ -1,36 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="600.0" prefWidth="1024.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox prefHeight="200.0" prefWidth="824.0">
-               <children>
-                  <TextArea fx:id="transmitterTextArea" prefHeight="200.0" prefWidth="250.0" wrapText="true" />
-                  <Region prefHeight="1.0" prefWidth="1.0" HBox.hgrow="ALWAYS" />
-                  <TextArea fx:id="receiverTextArea" prefHeight="200.0" prefWidth="250.0" wrapText="true" />
-               </children>
-            </HBox>
-            <Button fx:id="sendButton" mnemonicParsing="false" text="SEND" />
-            <ComboBox fx:id="codificationComboBox" prefWidth="150.0" />
-            <Region prefHeight="2.0" prefWidth="2.0" VBox.vgrow="ALWAYS" />
-         </children>
-         <padding>
-            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-         </padding>
-      </VBox>
       <Canvas fx:id="canvas" height="40.0" layoutY="531.0" width="100.0" AnchorPane.bottomAnchor="29.0" />
       <ScrollBar fx:id="scroll" layoutY="571.0" AnchorPane.bottomAnchor="14.6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <TextArea fx:id="transmitterTextArea" prefHeight="142.0" prefWidth="300.0" wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+      <TextArea fx:id="receiverTextArea" editable="false" layoutX="703.0" layoutY="34.0" prefHeight="142.0" prefWidth="300.0" wrapText="true" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
+      <Button fx:id="sendButton" layoutX="25.0" layoutY="167.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="300.0" text="SEND" />
+      <ComboBox fx:id="codificationComboBox" layoutX="444.0" layoutY="96.0" prefWidth="150.0" />
+      <TabPane layoutX="25.0" layoutY="210.0" prefHeight="293.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="ASCII">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="trasmitterAsciiTextArea" editable="false" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="transmitterCodificationTab" text="Codification">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="transmitterCodificationTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <TabPane layoutX="698.0" layoutY="209.0" prefHeight="294.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab fx:id="receiverCodificationTab" text="Codification">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="receiverCodificationTextArea" editable="false" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="ASCII">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="receiverAsciiTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Label layoutX="444.0" layoutY="76.0" text="Choose a codification:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

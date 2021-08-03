@@ -8,10 +8,16 @@
  *******************************************************************/
 package receiver;
 
+import controllers.MainController;
+import javafx.scene.control.TextArea;
 import util.Convert;
 
 public class ReceiverPhisicalLayer {
-  public static void receives(int[] bitsMessage, int codificationType, ReceiverApplication receiver){
+  public static TextArea asciiTextArea;
+
+  public static void receives(int[] bitsMessage, int codificationType, ReceiverApplication receiver, MainController controller){
+    asciiTextArea = controller.getReceiverAsciiTextArea();
+
     int asciiMessage [] = null;
 
     switch(codificationType){
@@ -44,6 +50,8 @@ public class ReceiverPhisicalLayer {
         position++;      
       }
       asciiMessage[i] = Convert.binaryToDecimal(Integer.parseInt(binaryString));
+      //adds the charactere into the TextArea int the interface
+      addAsciiCodeToTextArea(asciiMessage[i]);
     }//end for
     return asciiMessage;
   }//end binary
@@ -61,6 +69,8 @@ public class ReceiverPhisicalLayer {
         position++;      
       }
       asciiMessage[i] = Convert.manchesterToDecimal(manchesterString);
+      //adds the charactere into the TextArea int the interface
+      addAsciiCodeToTextArea(asciiMessage[i]);
     }//end for
     return asciiMessage;
   }//end manchester
@@ -90,8 +100,14 @@ public class ReceiverPhisicalLayer {
         position += 2;
       }
       asciiMessage[i] = Convert.binaryToDecimal(Integer.parseInt(binary));
+      //adds the charactere into the TextArea int the interface
+      addAsciiCodeToTextArea(asciiMessage[i]);
     }
     return asciiMessage;
+  }
+
+  private static void addAsciiCodeToTextArea(int ascii){
+    asciiTextArea.setText(asciiTextArea.getText() + (char) ascii + " = " + ascii + "\n");
   }
 
   /*

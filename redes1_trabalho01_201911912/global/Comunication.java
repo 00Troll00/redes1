@@ -12,17 +12,33 @@ import controllers.MainController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import receiver.ReceiverPhisicalLayer;
 
 public class Comunication { 
   public static void comunicate(int[] transmitterBits, int codificationType, MainController controller){
+    //related to the GUI-----------------
+    TextArea codificationTextArea = controller.getReceiverCodificationTextArea();
+    int number = (codificationType == 0) ? 8 : 16;
+    int counter = 0;
+    //-----------------------------------
+    
     int[] receiverBits = new int[transmitterBits.length];
 
     for(int i=0; i<transmitterBits.length; i++){
       receiverBits[i] = transmitterBits[i];
+      codificationTextArea.setText(codificationTextArea.getText() + receiverBits[i]);
+
+      //related to the GUI-----------------
+      counter++;
+      if(counter == number) {
+          codificationTextArea.setText(codificationTextArea.getText() + "\n");
+          counter = 0;
+      }
+      //-----------------------------------
     }
-    ReceiverPhisicalLayer.receives(receiverBits, codificationType, controller.getReceiver());
+    ReceiverPhisicalLayer.receives(receiverBits, codificationType, controller.getReceiver(), controller);
   }
 
   /*
