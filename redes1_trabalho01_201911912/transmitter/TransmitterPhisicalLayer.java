@@ -11,18 +11,31 @@ package transmitter;
 import controllers.MainController;
 import global.Comunication;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextArea;
 
 public class TransmitterPhisicalLayer {
   public static TextArea codificationTextArea;
 
   public static void receiveFromApplicationLayer(int[] asciiMessage, int codificationType, MainController controller){
+    //Related to the GUI -------------------------------------------------------------------------------
     codificationTextArea = controller.getTransmitterCodificationTextArea();
 
-    //changing to the bits tab
+    //creates a listener that force the scroll to be set at the bottom
+    ChangeListener<Number> listener = new ChangeListener<Number>(){
+      @Override
+      public void changed(ObservableValue<? extends Number> v, Number oldValue, Number newValue){
+        codificationTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
+      }
+    };
+    codificationTextArea.scrollTopProperty().addListener(listener);
+    
+    //changing to the bits's tab
     controller.getTransmitterTabPane().getSelectionModel().select(
       controller.getTransmitterTabPane().getTabs().get(1)
     );
+    //--------------------------------------------------------------------------------------------------
 
     new Thread( () -> {
       int[] fluxOfBits = null;
@@ -40,6 +53,9 @@ public class TransmitterPhisicalLayer {
           fluxOfBits = differentialManchester(asciiMessage);
           break;
       }
+      //remove the listener, so the scroll can be used again
+      codificationTextArea.scrollTopProperty().removeListener(listener);
+
       Comunication.comunicate(fluxOfBits, codificationType, controller);
     }).start(); 
   }
@@ -106,6 +122,7 @@ public class TransmitterPhisicalLayer {
       }
       //adds a line
       addLineToTextArea();
+      
       //------------------------------------------------------------------------------------------
     }//end for
     return bits;
@@ -142,7 +159,7 @@ public class TransmitterPhisicalLayer {
         try {
           Thread.sleep(25);
         } catch (InterruptedException e) { }
-        addBitToTextArea(bits[j]);
+        addBitToTextArea(bits[j]);      
       }
       //adds a line
       addLineToTextArea();
@@ -156,7 +173,10 @@ public class TransmitterPhisicalLayer {
   }
 
   private static void addLineToTextArea(){
-    Platform.runLater( () -> codificationTextArea.setText(codificationTextArea.getText() + "\n"));
+    Platform.runLater( () -> {
+      codificationTextArea.setText(codificationTextArea.getText() + "\n");
+      codificationTextArea.setScrollTop(9999);
+    });
   }
 
   /*

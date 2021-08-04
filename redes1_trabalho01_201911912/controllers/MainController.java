@@ -90,7 +90,8 @@ public class MainController implements Initializable{
     scroll.setMax(canvas.getWidth() - scroll.getWidth());
 
     scroll.valueProperty().addListener( (v, oldValue, newValue) -> {
-      canvas.setLayoutX(newValue.intValue()* (-1));
+      if(canvas.getWidth() > 1024)
+        canvas.setLayoutX(newValue.intValue()* (-1));
     });
     //-----------------------------------------------------------------------------
   }//end initialize

@@ -10,6 +10,8 @@ package global;
 
 import controllers.MainController;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollBar;
@@ -46,6 +48,15 @@ public class Comunication {
       controller.getReceiverTabpane().getTabs().get(0)
     );
 
+    //creates a listener that force the scroll to be set at the bottom
+    ChangeListener<Number> listener = new ChangeListener<Number>(){
+      @Override
+      public void changed(ObservableValue<? extends Number> v, Number oldValue, Number newValue){
+        codificationTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
+      }
+    };
+    codificationTextArea.scrollTopProperty().addListener(listener);
+
     //-----------------------------------
     
     int[] receiverBits = new int[transmitterBits.length];
@@ -70,7 +81,10 @@ public class Comunication {
           counter++;
           if(counter == number) {
               //put a new line in the textArea when reachs the size of a sequence of bits
-              Platform.runLater( () -> codificationTextArea.setText(codificationTextArea.getText() + "\n"));
+              Platform.runLater( () -> {
+                codificationTextArea.setText(codificationTextArea.getText() + "\n");
+                codificationTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
+              });
               counter = 0;
           }
           //if the canvas pass the size of the window it will be moved
@@ -82,14 +96,13 @@ public class Comunication {
           //Variables.mutex.acquire();
           Thread.sleep(Variables.speed);//hmmmm soninho
           //Variables.mutex.release();
-          canvasXPosition += 21;
-          
-           //calculates the new position to draw on the canvas, wich is the size of the line + 1
+          canvasXPosition += 21;//calculates the new position to draw on the canvas, wich is the size of the line + 1
           //-------------------------------------------------------------------------------------------------------
         }//end for
 
         scroll.setValue(scroll.getMax());
         scroll.setDisable(false);
+        codificationTextArea.scrollTopProperty().removeListener(listener);
         ReceiverPhisicalLayer.receives(receiverBits, codificationType, controller.getReceiver(), controller);
       } catch(InterruptedException e) { }
     }).start();//end thread

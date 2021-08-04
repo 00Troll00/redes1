@@ -43,7 +43,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <TabPane fx:id="receiverTabPane" layoutX="698.0" layoutY="209.0" prefHeight="294.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="receiverTabPane" layoutX="703.0" layoutY="209.0" prefHeight="294.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Bits">
                <content>
