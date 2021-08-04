@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -72,11 +73,25 @@
       </Label>
       <VBox alignment="CENTER" layoutX="442.0" layoutY="468.0">
          <children>
-            <Label text="Speed:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="Speed: ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelSpeed" layoutX="10.0" layoutY="10.0" text="40">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="52.0" layoutY="10.0" text=" bits/s">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <Slider fx:id="speedSlider" max="200.0" min="25.0" rotate="180.0" value="25.0" />
          </children>
       </VBox>

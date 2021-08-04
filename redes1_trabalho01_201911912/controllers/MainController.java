@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
@@ -39,6 +40,7 @@ public class MainController implements Initializable{
   @FXML private TextArea transmitterCodificationTextArea;
   @FXML private TextArea receiverCodificationTextArea;
   @FXML private TextArea receiverAsciiTextArea;
+  @FXML private Label labelSpeed;
 
   @FXML private Slider speedSlider;
 
@@ -66,6 +68,7 @@ public class MainController implements Initializable{
     //settings to the speed slider-------------------------------------------------
     speedSlider.valueProperty().addListener( (v, oldValue, newValue) ->{
         Variables.speed = newValue.intValue();
+        labelSpeed.setText(Integer.toString(1000/newValue.intValue()));
     });
     //-----------------------------------------------------------------------------
 
