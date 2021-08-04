@@ -40,6 +40,7 @@ public class ReceiverPhisicalLayer {
         break;
     }
     controller.getSendButton().setDisable(false);//enable the button
+    controller.getTransmitterTextArea().setEditable(true);//enable the text area
     receiver.receiver(asciiMessage);
   }
 
@@ -116,7 +117,7 @@ public class ReceiverPhisicalLayer {
     try {
       Thread.sleep(100);
     } catch (InterruptedException e) { }
-    asciiTextArea.setText(asciiTextArea.getText() + (char) ascii + " = " + ascii + "\n");
+    asciiTextArea.setText(asciiTextArea.getText() + ascii + " = " + (char) ascii + "\n");
     asciiTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
   }
 

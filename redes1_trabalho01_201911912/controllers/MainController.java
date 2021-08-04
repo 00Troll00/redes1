@@ -72,6 +72,7 @@ public class MainController implements Initializable{
     //button configuration---------------------------------------------------------
     sendButton.setOnAction( event -> {
       sendButton.setDisable(true);//disables the button
+      transmitterTextArea.setEditable(false);//disable the text area
       //cleaning the text areas when the send button is pressend
       receiverTextArea.setText("");
       trasmitterAsciiTextArea.setText("");
@@ -95,6 +96,10 @@ public class MainController implements Initializable{
     });
     //-----------------------------------------------------------------------------
   }//end initialize
+
+  public TextArea getTransmitterTextArea() {
+    return transmitterTextArea;
+  }
 
   public Button getSendButton() {
     return sendButton;
