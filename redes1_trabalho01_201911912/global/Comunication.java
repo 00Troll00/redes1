@@ -2,9 +2,9 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 30/07/2021 21:57
- * Last update: 30/07/2021 
- * Name: MainContrellor.java
- * Function: 
+ * Last update: 04/08/2021 14:00
+ * Name: Comunication.java
+ * Function: Simulates the comunication mean
  *******************************************************************/
 package global;
 
@@ -23,23 +23,28 @@ public class Comunication {
   private static int canvasXPosition;
 
   public static void comunicate(int[] transmitterBits, int codificationType, MainController controller){
-    //related to the GUI-----------------
+    //related to the GUI--------------------------------------------------------------------
     TextArea codificationTextArea = controller.getReceiverCodificationTextArea();
     int number = (codificationType == 0) ? 8 : 16;
-    //int counter = 0;
     Canvas canvas = controller.getCanvas();
     ScrollBar scroll = controller.getScroll();
     GraphicsContext graContext = canvas.getGraphicsContext2D();
+
     graContext.setFill(Color.WHITE);
     canvas.setLayoutX(0);//reset the position of the canvas
-    scroll.setValue(0);//reset the value to the scroll
-    scroll.setDisable(true);//disable the scroll
     //set the width of the canvas, using the size of the array * the size of each line
     canvas.setWidth(transmitterBits.length * 21);
+
     //set the max value of the scroll, it's based in the size of the canvas - the size of the
     //scroll wich is the size of the with of the window
+    scroll.setValue(0);//reset the value to the scroll
+    scroll.setDisable(true);//disable the scroll
     scroll.setMax(canvas.getWidth() - scroll.getWidth());
+
+    //paints the all canvas with white
     graContext.fillRect(0, 0, canvas.getWidth(), 50);
+
+    //changes the color that are used to paint the canvas to black
     graContext.setFill(Color.BLACK);
     canvasXPosition = 0;
 
@@ -57,7 +62,7 @@ public class Comunication {
     };
     codificationTextArea.scrollTopProperty().addListener(listener);
 
-    //-----------------------------------
+    //--------------------------------------------------------------------------------------
     
     int[] receiverBits = new int[transmitterBits.length];
 
@@ -86,7 +91,7 @@ public class Comunication {
                 codificationTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
               });
               counter = 0;
-          }
+          }//end if
           //if the canvas pass the size of the window it will be moved
           if(canvasXPosition > 1024){
             canvas.setLayoutX(canvas.getLayoutX() - 21);
@@ -100,17 +105,23 @@ public class Comunication {
           //-------------------------------------------------------------------------------------------------------
         }//end for
 
-        scroll.setValue(scroll.getMax());
-        scroll.setDisable(false);
+        scroll.setValue(scroll.getMax());//set the scroll to the max value
+        scroll.setDisable(false);//enable the scroll
         codificationTextArea.scrollTopProperty().removeListener(listener);
-        ReceiverPhisicalLayer.receives(receiverBits, codificationType, controller.getReceiver(), controller);
+
+        //send the bits to the receiver phisical layer
+        ReceiverPhisicalLayer.receive(receiverBits, codificationType, controller.getReceiver(), controller);
       } catch(InterruptedException e) { }
     }).start();//end thread
-  }
+  }//end comunicate
 
-  /*
-  
-  
+
+  /**********************************************
+   * The code below is not used, it was my firt
+   * attempt, since I miss understood the problem
+   * and how it showed be done
+   **********************************************/
+  /* 
   public static void comunicate(int[] transmitterBits, int codificationType, MainController controller){
     int[] receiverBits = new int[transmitterBits.length];
 

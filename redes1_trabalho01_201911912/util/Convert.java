@@ -2,9 +2,9 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 31/07/2021 15:18
- * Last update: 31/07/2021 19:41
- * Name: MainContrellor.java
- * Function: 
+ * Last update: 01/08/2021 21:01
+ * Name: Convert.java
+ * Function: provides some methoods to convert types
  *******************************************************************/
 package util;
 
@@ -33,7 +33,6 @@ public class Convert {
   }
 
   public static int manchesterToDecimal(String manchester){
-    //System.out.println(manchester);
     char[] arrayChar = manchester.toCharArray();
     int number = 0;
     int cont = 0;

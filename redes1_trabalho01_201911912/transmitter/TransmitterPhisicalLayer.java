@@ -2,9 +2,9 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 30/07/2021 21:55
- * Last update: 30/07/2021 
- * Name: MainContrellor.java
- * Function: 
+ * Last update: 04/08/2021 13:57
+ * Name: TransmitterPhisicalLayer.java
+ * Function: Simulates the phisical layer of the transmitter
  *******************************************************************/
 package transmitter;
 
@@ -18,7 +18,7 @@ import javafx.scene.control.TextArea;
 public class TransmitterPhisicalLayer {
   public static TextArea codificationTextArea;
 
-  public static void receiveFromApplicationLayer(int[] asciiMessage, int codificationType, MainController controller){
+  public static void receive(int[] asciiMessage, int codificationType, MainController controller){
     //Related to the GUI -------------------------------------------------------------------------------
     codificationTextArea = controller.getTransmitterCodificationTextArea();
 
@@ -56,9 +56,10 @@ public class TransmitterPhisicalLayer {
       //remove the listener, so the scroll can be used again
       codificationTextArea.scrollTopProperty().removeListener(listener);
 
+      //sends the bits to the comunication mean
       Comunication.comunicate(fluxOfBits, codificationType, controller);
     }).start(); 
-  }
+  }//end receive
 
   private static int[] binary(int[] asciiMessage) {
     int[] bits = new int[asciiMessage.length * 8];
@@ -88,7 +89,7 @@ public class TransmitterPhisicalLayer {
       //------------------------------------------------------------------------------------------
     }//end for
     return bits;
-  }
+  }//end binary
 
   private static int[] manchester(int[] asciiMessage) {
     int[] bits = new int[asciiMessage.length * 16];
@@ -126,7 +127,7 @@ public class TransmitterPhisicalLayer {
       //------------------------------------------------------------------------------------------
     }//end for
     return bits;
-  }
+  }//end manchester
   
   public static int[] differentialManchester(int[] asciiMessage){
     int[] bits = new int[asciiMessage.length*16];
@@ -160,13 +161,13 @@ public class TransmitterPhisicalLayer {
           Thread.sleep(25);
         } catch (InterruptedException e) { }
         addBitToTextArea(bits[j]);      
-      }
+      }//end for
       //adds a line
       addLineToTextArea();
       //------------------------------------------------------------------------------------------
-    } 
+    }//end for 
     return bits;
-  }
+  }//end differentialManchester
 
   private static void addBitToTextArea(int bit){
     Platform.runLater( () -> codificationTextArea.setText(codificationTextArea.getText() + bit));
@@ -178,6 +179,12 @@ public class TransmitterPhisicalLayer {
       codificationTextArea.setScrollTop(9999);
     });
   }
+
+  /**********************************************
+   * The code below is not used, it was my firt
+   * attempt, since I miss understood the problem
+   * and how it showed be done
+   **********************************************/
 
   /*
   //receives the message from the application layer

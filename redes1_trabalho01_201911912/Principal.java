@@ -2,9 +2,9 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 30/07/2021 17:55
- * Last update: 31/07/2021 15:28
+ * Last update: 04/08/2021 13:00
  * Name: Principal.java
- * Function: the main class
+ * Function: The main class
  *******************************************************************/
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

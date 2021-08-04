@@ -2,9 +2,9 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 30/07/2021 21:53
- * Last update: 30/07/2021 
- * Name: MainContrellor.java
- * Function: 
+ * Last update: 04/08/2021 11:58
+ * Name: TransmitterApplication.java
+ * Function: Simulates the transmitter application layer
  *******************************************************************/
 package transmitter;
 
@@ -35,19 +35,19 @@ public class TransmitterApplication {
       for(int i=0; i<message.length; i++){
         asciiMessage[i] = message[i];
         //adds the ascii code to the TextArea
-        addAscii(message[i], asciiMessage[i]);
+        addAsciiToTextArea(message[i], asciiMessage[i]);
       }
       
       //sends the message to the phisical layer
-      TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, codificationType, controller);
+      TransmitterPhisicalLayer.receive(asciiMessage, codificationType, controller);
     }).start();
-  }
+  }//end sendToPhisicalLayer
 
-  public void addAscii(char charactere, int number){
+  public void addAsciiToTextArea(char charactere, int number){
     try {
       Thread.sleep(100);
     } catch (InterruptedException e) { }
     asciiTextArea.setText(asciiTextArea.getText() + charactere + " = " + number + "\n");
     asciiTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
-  }
+  }//end addAscii
 }

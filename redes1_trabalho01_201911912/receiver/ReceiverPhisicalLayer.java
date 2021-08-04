@@ -2,9 +2,9 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 30/07/2021 22:29
- * Last update: 30/07/2021 
- * Name: MainContrellor.java
- * Function: 
+ * Last update: 04/08/2021 14:11
+ * Name: ReceiverPhisicalLayer.java
+ * Function: Simulates the phisical layer of the receiver
  *******************************************************************/
 package receiver;
 
@@ -15,7 +15,7 @@ import util.Convert;
 public class ReceiverPhisicalLayer {
   public static TextArea asciiTextArea;
 
-  public static void receives(int[] bitsMessage, int codificationType, ReceiverApplication receiver, MainController controller){
+  public static void receive(int[] bitsMessage, int codificationType, ReceiverApplication receiver, MainController controller){
     asciiTextArea = controller.getReceiverAsciiTextArea();
 
     //changing to the ascii tab
@@ -41,8 +41,10 @@ public class ReceiverPhisicalLayer {
     }
     controller.getSendButton().setDisable(false);//enable the button
     controller.getTransmitterTextArea().setEditable(true);//enable the text area
-    receiver.receiver(asciiMessage);
-  }
+
+    //sends the ascii codes to the application layer
+    receiver.receive(asciiMessage);
+  }//end receive
 
   private static int[] binary(int[] bitsMessage) {
     int[] asciiMessage = new int[bitsMessage.length/8];
@@ -111,7 +113,7 @@ public class ReceiverPhisicalLayer {
       addAsciiCodeToTextArea(asciiMessage[i]);
     }
     return asciiMessage;
-  }
+  }//end differentialManchester
 
   private static void addAsciiCodeToTextArea(int ascii){
     try {
@@ -119,7 +121,13 @@ public class ReceiverPhisicalLayer {
     } catch (InterruptedException e) { }
     asciiTextArea.setText(asciiTextArea.getText() + ascii + " = " + (char) ascii + "\n");
     asciiTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
-  }
+  }//end addAsciiCodeToTextArea
+
+  /**********************************************
+   * The code below is not used, it was my firt
+   * attempt, since I miss understood the problem
+   * and how it showed be done
+   **********************************************/
 
   /*
   public static void receives(int[] bitsMessage, String[] bitsMessageString, int codificationType, ReceiverApplication receiver){

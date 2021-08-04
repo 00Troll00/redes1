@@ -2,9 +2,10 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 30/07/2021 18:18
- * Last update: 03/08/2021 20:42
- * Name: MainContrellor.java
- * Function: 
+ * Last update: 04/08/2021 15:17
+ * Name: MainContreller.java
+ * Function: Controls the GUI that is build using the fxml and keeps
+ *           references to some Nodes
  *******************************************************************/
 package controllers;
 
@@ -100,6 +101,7 @@ public class MainController implements Initializable{
     //-----------------------------------------------------------------------------
   }//end initialize
 
+  //Gets ------------------------------------------------
   public TextArea getTransmitterTextArea() {
     return transmitterTextArea;
   }
