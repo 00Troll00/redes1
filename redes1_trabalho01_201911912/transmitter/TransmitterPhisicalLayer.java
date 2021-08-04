@@ -10,6 +10,7 @@ package transmitter;
 
 import controllers.MainController;
 import global.Comunication;
+import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 
 public class TransmitterPhisicalLayer {
@@ -18,22 +19,29 @@ public class TransmitterPhisicalLayer {
   public static void receiveFromApplicationLayer(int[] asciiMessage, int codificationType, MainController controller){
     codificationTextArea = controller.getTransmitterCodificationTextArea();
 
-    int[] fluxOfBits = null;
-    switch(codificationType){
-      //binary codification
-      case 0:
-      fluxOfBits = binary(asciiMessage);
-        break;
-      //Manchester codification
-      case 1:
-      fluxOfBits = manchester(asciiMessage);
-        break;
-      //Differential Manchester codification
-      case 2:
-        fluxOfBits = differentialManchester(asciiMessage);
-        break;
-    }
-    Comunication.comunicate(fluxOfBits, codificationType, controller);
+    //changing to the bits tab
+    controller.getTransmitterTabPane().getSelectionModel().select(
+      controller.getTransmitterTabPane().getTabs().get(1)
+    );
+
+    new Thread( () -> {
+      int[] fluxOfBits = null;
+      switch(codificationType){
+        //binary codification
+        case 0:
+        fluxOfBits = binary(asciiMessage);
+          break;
+        //Manchester codification
+        case 1:
+        fluxOfBits = manchester(asciiMessage);
+          break;
+        //Differential Manchester codification
+        case 2:
+          fluxOfBits = differentialManchester(asciiMessage);
+          break;
+      }
+      Comunication.comunicate(fluxOfBits, codificationType, controller);
+    }).start(); 
   }
 
   private static int[] binary(int[] asciiMessage) {
@@ -54,10 +62,13 @@ public class TransmitterPhisicalLayer {
       position = i*8;//the position where the bit starts
       //adds the bits to the TextArea
       for(int j = position; j<position+8; j++){
-        codificationTextArea.setText(codificationTextArea.getText() + bits[j]);
+        try {
+          Thread.sleep(25);
+        } catch (InterruptedException e) { }
+        addBitToTextArea(bits[j]);
       }
       //adds a line
-      codificationTextArea.setText(codificationTextArea.getText() + "\n");
+      addLineToTextArea();
       //------------------------------------------------------------------------------------------
     }//end for
     return bits;
@@ -88,35 +99,38 @@ public class TransmitterPhisicalLayer {
       position = i*16;//the position where the bit starts
       //adds the bits to the TextArea
       for(int j = position; j<position+16; j++){
-        codificationTextArea.setText(codificationTextArea.getText() + bits[j]);
+        try {
+          Thread.sleep(25);
+        } catch (InterruptedException e) { }
+        addBitToTextArea(bits[j]);
       }
       //adds a line
-      codificationTextArea.setText(codificationTextArea.getText() + "\n");
+      addLineToTextArea();
       //------------------------------------------------------------------------------------------
     }//end for
     return bits;
   }
   
   public static int[] differentialManchester(int[] asciiMessage){
-    int[] differentialManchester = new int[asciiMessage.length*16];
+    int[] bits = new int[asciiMessage.length*16];
     String binary;
     int position = 0;
     for(int i=0; i<asciiMessage.length; i++){
       binary = Integer.toBinaryString(asciiMessage[i]);
       position = (16 * (i + 1)) - binary.length()*2;
 
-      differentialManchester[position    ] = 1;
-      differentialManchester[position + 1] = 0;
+      bits[position    ] = 1;
+      bits[position + 1] = 0;
       position += 2;
 
       for(int j=1; j<binary.length(); j++){
         if(binary.charAt(j) == '0'){
-          differentialManchester[position    ] = differentialManchester [position - 2];
-          differentialManchester[position + 1] = differentialManchester [position - 1];
+          bits[position    ] = bits [position - 2];
+          bits[position + 1] = bits [position - 1];
         }
         else{
-          differentialManchester[position    ] = differentialManchester [position - 1];
-          differentialManchester[position + 1] = differentialManchester [position - 2];
+          bits[position    ] = bits [position - 1];
+          bits[position + 1] = bits [position - 2];
         }
         position += 2;
       }//end for
@@ -125,14 +139,26 @@ public class TransmitterPhisicalLayer {
       position = i*16;//the position where the bit starts
       //adds the bits to the TextArea
       for(int j = position; j<position+16; j++){
-        codificationTextArea.setText(codificationTextArea.getText() + differentialManchester[j]);
+        try {
+          Thread.sleep(25);
+        } catch (InterruptedException e) { }
+        addBitToTextArea(bits[j]);
       }
       //adds a line
-      codificationTextArea.setText(codificationTextArea.getText() + "\n");
+      addLineToTextArea();
       //------------------------------------------------------------------------------------------
     } 
-    return differentialManchester;
+    return bits;
   }
+
+  private static void addBitToTextArea(int bit){
+    Platform.runLater( () -> codificationTextArea.setText(codificationTextArea.getText() + bit));
+  }
+
+  private static void addLineToTextArea(){
+    Platform.runLater( () -> codificationTextArea.setText(codificationTextArea.getText() + "\n"));
+  }
+
   /*
   //receives the message from the application layer
   public static void receiveFromApplicationLayer(int[] asciiMessage, int codificationType, MainController controller){

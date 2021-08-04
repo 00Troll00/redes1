@@ -18,6 +18,11 @@ public class ReceiverPhisicalLayer {
   public static void receives(int[] bitsMessage, int codificationType, ReceiverApplication receiver, MainController controller){
     asciiTextArea = controller.getReceiverAsciiTextArea();
 
+    //changing to the ascii tab
+    controller.getReceiverTabpane().getSelectionModel().select(
+      controller.getReceiverTabpane().getTabs().get(1)
+    );
+
     int asciiMessage [] = null;
 
     switch(codificationType){
@@ -34,6 +39,7 @@ public class ReceiverPhisicalLayer {
         asciiMessage = differentialManchester(bitsMessage);
         break;
     }
+    controller.getSendButton().setDisable(false);//enable the button
     receiver.receiver(asciiMessage);
   }
 
@@ -107,7 +113,11 @@ public class ReceiverPhisicalLayer {
   }
 
   private static void addAsciiCodeToTextArea(int ascii){
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) { }
     asciiTextArea.setText(asciiTextArea.getText() + (char) ascii + " = " + ascii + "\n");
+    asciiTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
   }
 
   /*

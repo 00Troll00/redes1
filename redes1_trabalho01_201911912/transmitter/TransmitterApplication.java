@@ -13,6 +13,7 @@ import javafx.scene.control.TextArea;
 
 public class TransmitterApplication {
   private TextArea textArea;
+  private TextArea asciiTextArea;
 
   public TransmitterApplication(TextArea textArea){
     this.textArea = textArea;
@@ -20,18 +21,33 @@ public class TransmitterApplication {
 
   //sends the mensage to the phisical layer
   public void sendToPhisicalLayer(MainController controller, int codificationType){
-    TextArea asciiTextArea = controller.getTrasmitterAsciiTextArea();
+    asciiTextArea = controller.getTrasmitterAsciiTextArea();
 
-    char[] message = textArea.getText().toCharArray();
-    int[] asciiMessage = new int[message.length];
-    //transforms from char in int, with the ascii code
-    for(int i=0; i<message.length; i++){
-      asciiMessage[i] = message[i];
-      //adds the ascii code to the TextArea
-      asciiTextArea.setText(asciiTextArea.getText() + message[i] + " = " + asciiMessage[i] + "\n");
-    }
-    
-    //sends the message to the phisical layer
-    TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, codificationType, controller);
+    //changing to the ascii tab
+    controller.getTransmitterTabPane().getSelectionModel().select(
+      controller.getTransmitterTabPane().getTabs().get(0)
+    );
+
+    new Thread( () -> {
+      char[] message = textArea.getText().toCharArray();
+      int[] asciiMessage = new int[message.length];
+      //transforms from char in int, with the ascii code
+      for(int i=0; i<message.length; i++){
+        asciiMessage[i] = message[i];
+        //adds the ascii code to the TextArea
+        addAscii(message[i], asciiMessage[i]);
+      }
+      
+      //sends the message to the phisical layer
+      TransmitterPhisicalLayer.receiveFromApplicationLayer(asciiMessage, codificationType, controller);
+    }).start();
+  }
+
+  public void addAscii(char charactere, int number){
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) { }
+    asciiTextArea.setText(asciiTextArea.getText() + charactere + " = " + number + "\n");
+    asciiTextArea.setScrollTop(9999);//make the scroll go down if the texts exceeds the size of the TextArea
   }
 }

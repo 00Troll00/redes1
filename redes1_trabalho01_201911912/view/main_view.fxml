@@ -5,10 +5,12 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -19,7 +21,7 @@
       <TextArea fx:id="receiverTextArea" editable="false" layoutX="703.0" layoutY="34.0" prefHeight="142.0" prefWidth="300.0" wrapText="true" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
       <Button fx:id="sendButton" layoutX="25.0" layoutY="167.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="300.0" text="SEND" />
       <ComboBox fx:id="codificationComboBox" layoutX="444.0" layoutY="96.0" prefWidth="150.0" />
-      <TabPane layoutX="25.0" layoutY="210.0" prefHeight="293.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="transmitterTabPane" layoutX="25.0" layoutY="210.0" prefHeight="293.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="ASCII">
             <content>
@@ -30,7 +32,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="transmitterCodificationTab" text="Codification">
+          <Tab text="Bits">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -41,9 +43,9 @@
           </Tab>
         </tabs>
       </TabPane>
-      <TabPane layoutX="698.0" layoutY="209.0" prefHeight="294.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="receiverTabPane" layoutX="698.0" layoutY="209.0" prefHeight="294.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab fx:id="receiverCodificationTab" text="Codification">
+            <Tab text="Bits">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -68,5 +70,15 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <VBox alignment="CENTER" layoutX="442.0" layoutY="468.0">
+         <children>
+            <Label text="Speed:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Slider fx:id="speedSlider" max="200.0" min="25.0" rotate="180.0" value="25.0" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
