@@ -2,10 +2,13 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 15/08/2021 13:28
- * Last update: 17/08/2021 19:25
+ * Last update: 19/08/2021 22:13
  * Name: ReceiverEnlaceLayer.java
  * Function: Simulates the enlace layer of the receiver
  *******************************************************************/
+
+// I will separete in a ArrayList of frames in the "trabalho03"
+
 package receiver;
 
 import controllers.MainController;
@@ -127,33 +130,56 @@ public class ReceiverEnlaceLayer {
     for(int bit : framedBits)
       enlaceTextArea.setText(enlaceTextArea.getText() + String.valueOf(bit));
     //----------------------------------------------------------------------------
-    String message = "";
     int cont = 0;
-    int position = 0;
-    int asciiPosition = 0;
-    int[] bitsSequence = new int[8];
-    int[] asciiMessage = new int[framedBits.length/7];
-    for(int i = 0; i<asciiMessage.length; i++)
-      asciiMessage[i] = -1;//turns all numbers int -1 so I can know where the message ends
-    
-      //transforming in ascii
+    String fluxOfBits = "";
+    String temp = ""; //this string keeps a sequence that can be the flag
+    //desmounting the frames
     for(int bit: framedBits){
-      if(cont==5)
-        cont = 0;
-      else{
-        if(bit == 1)
+      if(bit == 0){
+        if(cont == 0){
+          temp += bit;
           cont++;
-        if(bit == 0)
-          cont = 0;
-        bitsSequence[position] = bit;
-        position++;
-        if(position>7){
-          asciiMessage[asciiPosition] = Convert.binaryToDecimal(bitsSequence);
-          asciiPosition++;
-          position=0;
         }
+        else if(cont == 6){//found a bit inserted and don't added it to the flux
+          fluxOfBits += temp;
+          temp = "";
+          cont = 0;
+        }
+        else if(cont == 7){//found a flag
+          //hmmmmmmmm gambiarrazinha
+          // I never implemented a automato, so there is a bug that adds the first 0 off the flag, this part "resolves" it
+          try{
+            fluxOfBits = fluxOfBits.substring(0, (fluxOfBits.length()-1));
+          } catch (IndexOutOfBoundsException e) { }
+          //the try catch is because the first part is a flag, and the String will be of size 0
+          temp = "";
+          cont = 0;
+        } 
+        else{//not a inserted bit, so just add it to the flux
+          temp += bit;
+          fluxOfBits += temp;
+          temp = "";
+          cont = 1;//already counted a 0
+        }
+      }//end if
+      else{
+        temp += bit;
+        cont++;
       }//end else
     }//end for
+
+    //transforming the string of bits in a int arrray'
+    int[] bits = new int[fluxOfBits.length()];
+    for(int i=0; i<bits.length; i++){
+      if(fluxOfBits.charAt(i) == '0')
+        bits[i] = 0;
+      else
+        bits[i] = 1;
+    }
+    
+    //transforms from a int array of binaryes in a int array of ascii codes
+    int[] asciiMessage = binaryToAscii(bits);
+    String message = "";
     
     //transforming the ascii codes in to the message
     for(int i = 0; i<asciiMessage.length; i++){
@@ -170,4 +196,22 @@ public class ReceiverEnlaceLayer {
       framedMessage += (char) asciiCode;
     enlaceTextArea.setText(framedMessage);
   }
+
+  private static int[] binaryToAscii(int[] binaryArray) {
+    int position = 0;
+    int asciiPosition = 0;//position in the asciiArray
+    int[] bitsSequence = new int[8];// a sequence of 8 bits
+    int[] asciiMessage = new int[binaryArray.length/8];
+    //transforming from binary to ascii
+    for(int bit : binaryArray){
+      bitsSequence[position] = bit;
+      position++;
+      if(position>7){
+        asciiMessage[asciiPosition] = Convert.binaryToDecimal(bitsSequence);
+        asciiPosition++;
+        position=0;
+      }
+    }//end for
+    return asciiMessage;
+  }//end binaryToAscii
 }

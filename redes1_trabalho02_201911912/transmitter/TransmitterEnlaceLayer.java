@@ -2,9 +2,9 @@
  * Author: Alan Bonfim Santos
  * Registration: 201911912
  * Initial date: 30/07/2021 21:53
- * Last update: 17/08/2021 19:24
+ * Last update: 19/08/2021 20:48
  * Name: TransmitterEnlaceLayer.java
- * Function: 
+ * Function: simulates the transmitter's enlace layer
  *******************************************************************/
 package transmitter;
 
@@ -129,13 +129,32 @@ public class TransmitterEnlaceLayer{
         bitStufingMessage += '0';
     }//end for
 
-    addToTextArea(bitStufingMessage.toCharArray());
+    cont = 0; //reusing the cont varible
+    final String FLAG = "01111110";
+    final int FRAME_SIZE = 50; //a frame has 50 bits
+    String framedMessage = FLAG; //adds the start flag
+    for(int i=0; i<bitStufingMessage.length(); i++){
+      framedMessage += bitStufingMessage.charAt(i);
+      cont++;
+      if(cont == FRAME_SIZE){
+        framedMessage += FLAG; //adds a flag
+        cont = 0; //reset the cont
+      }
+    }
+    //if the cont is equal to 0 it means that a final flag has already been added
+    if(cont != 0)
+      framedMessage += FLAG; //adds the end flag
+
+    //adding the flag
+
+
+    addToTextArea(framedMessage.toCharArray());
 
     //transforming in int[]
-    int[] binaryArray = new int[bitStufingMessage.length()];
+    int[] binaryArray = new int[framedMessage.length()];
     String bit = "";
     for(int i = 0; i<binaryArray.length; i++){
-      bit += bitStufingMessage.charAt(i);
+      bit += framedMessage.charAt(i);
       binaryArray[i] = Integer.parseInt(bit);
       bit = "";
     }

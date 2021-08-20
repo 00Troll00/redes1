@@ -100,7 +100,7 @@ public class ReceiverPhisicalLayer {
       }
     }//end for
     return asciiMessage;
-  }//end binaryToAscii'
+  }//end binaryToAscii
 
   private static int[] binary(int[] binaryArray){
     return binaryArray;//already in binary
